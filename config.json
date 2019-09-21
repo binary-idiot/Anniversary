@@ -1,0 +1,40 @@
+{
+	"paths": {
+		"src": {
+			"pages": "src/pages/",
+			"scripts": "src/scripts/",
+			"styles": "src/styles/",
+			"images": "src/images/"
+		},
+		"dest": {
+			"pages": "docs/",
+			"scripts": "docs/scripts/",
+			"styles": "docs/styles/",
+			"images": "docs/images/",
+			"sourcemaps": "../maps"
+		}
+	},
+
+	"sass": {
+		"prod": {
+			"outputStyle": "compressed"
+		},
+		"dev": {}
+	},
+
+	"sizes": {
+		"showFiles": true
+	},
+
+	"resize": {
+		"rules": {
+			
+		},
+
+		"options": {
+			"withoutEnlargement": true,
+			"errorOnUnusedImage": false,
+			"passThroughUnused": true
+		}
+	}
+}
