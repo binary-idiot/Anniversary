@@ -91,7 +91,19 @@ if(args.prod){
 	images.description = 'Clean and resize images'
 
 
-const compile = gulp.parallel(pages, styles, images);
+	// Scripts
+	const compileScripts = () => {
+		return gulp.src(`${paths.src.scripts}*`)
+			.pipe(gulp.dest(paths.dest.scripts))
+			.pipe(connect.reload());
+	}
+
+	const cleanScripts =() => {return del([`${paths.dest.scripts}`])};
+
+	const scripts = gulp.series(cleanScripts, compileScripts);
+	scripts.description = 'Move scripts';
+
+const compile = gulp.parallel(pages, styles, images, scripts);
 compile.description = 'Compile all sources';
 
 
@@ -111,7 +123,12 @@ const watchImages = () => {
 			.on('all', gulp.series(images))
 }
 
-const watch = gulp.parallel(watchPages, watchStyles, watchImages);
+const watchScripts = () => {
+	return gulp.watch(`${paths.src.scripts}`)
+		.on('all', gulp.series(scripts));
+}
+
+const watch = gulp.parallel(watchPages, watchStyles, watchImages, watchScripts);
 watch.description = 'Watch for changes to sources';
 
 
@@ -132,6 +149,7 @@ export {
 	compile,
 	styles,
 	images,
+	scripts,
 	pages,
 	watch,
 	serve,
