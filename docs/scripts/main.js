@@ -1,59 +1,52 @@
-
+import Calendar from "./calendar.js";
 
 document.addEventListener('DOMContentLoaded', (event) => {
 	addCounters();
 });
 
-addCounters = () => {
+const addCounters = () => {
 
 	countFrom(new Date("September 23, 2017 00:00:00"));
 
 	const nextAnniversary = findNextAnniversary();
 
-	//countTill(nextAnniversary)
+	countTill(nextAnniversary)
 }
 
-countFrom = (startDate) => {
+const countFrom = (startDate) => {
+	let now = new Date();
+	const counter = document.getElementById('counter-from');
 
-const counterF = document.getElementById('counter-from');
+	updateCounter(startDate, now, counter);
 	
-setInterval(() => {
-	let now = new Date().getTime();
-	let time = now - startDate.getTime();
+	setInterval(() => {
+		now = new Date()
+		updateCounter(startDate, now, counter);
 
-	let year = Math.floor(time / (1000 * 60 * 60 *365))
-	let month = Math.floor((time % (1000 * 60 * 60 *365)) / (1000 * 60 * 60 * 24 * 30));
-	let day = Math.floor((time % 1000 * 60 * 60 * 24 * 30) / (1000 * 60 * 60 * 24));
-
-	counterF.innerHTML = year + " years, " + month + " months, and " + day + " day(s)";
-
-}, 1000 * 60);
+	}, 1000 * 60);
 
 }
 
-countTill = (nextDate) => {
+const countTill = (nextDate) => {
+	//TODO: Day of anniversary
+	let now = new Date();
+	const counter = document.getElementById('counter-until');
 
-	const counterU = document.getElementById('counter-until');
+	updateCounter(now, nextDate, counter);
 
 	setInterval(() => {
-		let now = new Date().getTime()
-		let time = nextDate.getTime() - now;
-
-		if(time > 0){
-
-			let year = Math.floor(time / (1000 * 60 * 60 *365))
-			let month = Math.floor((time % (1000 * 60 * 60 *365)) / (1000 * 60 * 60 * 24 * 30));
-			let day = Math.floor((time % 1000 * 60 * 60 * 24 * 30) / (1000 * 60 * 60 * 24));
-
-			counterU.innerHTML = year + " years, " + month + " months, and " + day + " day(s)";
-		} else if(time < 0) {
-
-		}
-
-	})
+		now = new Date();
+		updateCounter(now, nextDate, counter);
+	}, 1000 * 60);
 }
 
-findNextAnniversary = () => {
+const updateCounter = (startDate, endDate, counter) => {
+	const time = Calendar.getDifference(startDate, endDate);
+
+	counter.innerHTML = time.years + " year(s), " + time.months + " month(s), " + time.days + " day(s), and " + time.hours + " hour(s)";
+}
+
+const findNextAnniversary = () => {
 	const dateNow = new Date();
 	let next;
 

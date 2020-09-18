@@ -1,4 +1,4 @@
-class Calendar{
+export default class Calendar{
 
     static DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -11,13 +11,16 @@ class Calendar{
     static getDifference(firstDate, secondDate){
                 
         // Ensure first date is before second date
-        if((firstDate - secondDate) < 0){
+        if((firstDate - secondDate) > 0){
             const d = firstDate;
             firstDate = secondDate;
             secondDate = d;
         }
         
-        return {hours:this.calcHours(), days:this.calcDays(), months:this.calcMonths(), years:this.calcYears(firstDate, secondDate)};     
+        return {hours:this.calcHours(firstDate, secondDate),
+            days:this.calcDays(firstDate, secondDate),
+            months:this.calcMonths(firstDate, secondDate),
+            years:this.calcYears(firstDate, secondDate)};     
     }
 
     /**
@@ -35,6 +38,8 @@ class Calendar{
         }else if(fHour > sHour){
             hours = 24 + sHour - fHour;
         }
+
+        return hours;
     }
 
     /**
@@ -54,10 +59,10 @@ class Calendar{
                 days = 0;
             }
         }else if(fDay > sDay){
-            if(this.leapYear() && fDate.getMonth() === 1){
+            if(this.leapYear(fDate.getFullYear()) && fDate.getMonth() === 1){
                 days = 29 + sDay - fDay;
             }else{
-                days = this.DAYS_IN_MONTH[fDate.getMonth] + sDay - fDay;
+                days = this.DAYS_IN_MONTH[fDate.getMonth()] + sDay - fDay;
             }
         }
 
@@ -73,7 +78,7 @@ class Calendar{
 
         // add one to each month to convert from 0-11 to 1-12
         const fMonth = fDate.getMonth() + 1;
-        const sMonth = sMonth.getMonth() + 1;
+        const sMonth = sDate.getMonth() + 1;
         let months = 0;
 
         if(fMonth < sMonth){
@@ -100,10 +105,10 @@ class Calendar{
         let years = 0;
 
         if(fYear < sYear){
-            years = fYear - sYear;
+            years = sYear -fYear;
             
             if((years === 1) && !this.componentsAreGreater(fDate, sDate, "month")){
-                years =0;
+                years = 0;
             }
         }
 
