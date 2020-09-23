@@ -6,11 +6,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 const addCounters = () => {
 
-	countFrom(new Date("September 23, 2017 00:00:00"));
+	countFrom(new Date("September 24, 2017 00:00:00"));
 
-	const nextAnniversary = findNextAnniversary();
-
-	countTill(nextAnniversary)
+	countTill()
 }
 
 const countFrom = (startDate) => {
@@ -27,16 +25,27 @@ const countFrom = (startDate) => {
 
 }
 
-const countTill = (nextDate) => {
+const countTill = () => {
 	//TODO: Day of anniversary
 	let now = new Date();
+	let nextDate = findNextAnniversary();
 	const counter = document.getElementById('counter-until');
 
-	updateCounter(now, nextDate, counter);
-
+	if(nextDate === null){
+		counter.innerHTML = "Happy Anniversary!"
+	}else{
+		updateCounter(now, nextDate, counter);
+	}
+	
 	setInterval(() => {
 		now = new Date();
-		updateCounter(now, nextDate, counter);
+		nextDate = findNextAnniversary();
+
+		if(nextDate === null){
+			counter.innerHTML = "Happy Anniversary!"
+		}else{
+			updateCounter(now, nextDate, counter);
+		}
 	}, 1000 * 60);
 }
 
@@ -51,12 +60,14 @@ const findNextAnniversary = () => {
 	let next;
 
 
-	if(dateNow.getMonth() < 9){
-		next = new Date("September 23, " + dateNow.getFullYear() + " 00:00:00");
-	} else if(dateNow.getMonth() > 9){
+	if(dateNow.getMonth() <= 8 && dateNow.getDate() <= 23){
+		if(dateNow.getDate() != 23){
+			next = new Date("September 23, " + dateNow.getFullYear() + " 00:00:00");
+		}else{
+			next = null;
+		}
+	}else{
 		next = new Date("Spetember 23, " + (dateNow.getFullYear() + 1) + " 00:00:00");
-	} else {
-		next = null;
 	}
 
 	return next;
