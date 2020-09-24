@@ -6,20 +6,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 const addCounters = () => {
 
-	countFrom(new Date("September 24, 2017 00:00:00"));
+	countFrom(new Date("August 23, 2017 00:00:00"));
 
 	countTill()
 }
 
 const countFrom = (startDate) => {
 	let now = new Date();
+	
 	const counter = document.getElementById('counter-from');
 
-	updateCounter(startDate, now, counter);
+	updateCounter(now, startDate, counter);
+	
 	
 	setInterval(() => {
 		now = new Date()
-		updateCounter(startDate, now, counter);
+		updateCounter(now, startDate, counter);
 
 	}, 1000 * 60);
 
@@ -59,16 +61,18 @@ const findNextAnniversary = () => {
 	const dateNow = new Date();
 	let next;
 
-
-	if(dateNow.getMonth() <= 8 && dateNow.getDate() <= 23){
+	if(dateNow.getMonth() < 8){
+		next = new Date("September 23, " + dateNow.getFullYear() + " 00:00:00");
+	}else if(dateNow.getMonth() == 8 && dateNow.getDate() <= 23){
 		if(dateNow.getDate() != 23){
 			next = new Date("September 23, " + dateNow.getFullYear() + " 00:00:00");
 		}else{
 			next = null;
 		}
 	}else{
-		next = new Date("Spetember 23, " + (dateNow.getFullYear() + 1) + " 00:00:00");
+		next = new Date("September 23, " + (dateNow.getFullYear() + 1) + " 00:00:00");
 	}
 
 	return next;
+	
 } 
