@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', event =>{
 
 const anniversaryDate = {
     year: 2017,
-    month: 8,
-    day: 23
+    month: 0,
+    day: 22
 }
 
 const addCounters = () => {
@@ -33,10 +33,14 @@ const countUp = counter => {
 
 const countDown = counter => {
     const next = findNextAnniversary();
-    const now = new Date();
+    if(next != null){
+        const now = new Date();
 
-    const time = dateDifference(next, now);
-    updateCounter(time, counter);
+        const time = dateDifference(next, now);
+        updateCounter(time, counter);
+    }else{
+        counter.innerHTML = "Happy Anniversary!";
+    }
 }
 
 const updateCounter = (time, counter) => {
