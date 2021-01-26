@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', event =>{
 
 const anniversaryDate = {
     year: 2017,
-    month: 0,
-    day: 22
+    month: 8,
+    day: 23
 }
 
 const addCounters = () => {
