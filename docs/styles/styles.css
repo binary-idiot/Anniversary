@@ -1,0 +1,21 @@
+main {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  justify-items: center;
+  text-align: center; }
+
+.page-title {
+  grid-column: span 2;
+  grid-row: 1; }
+
+.counter-container {
+  grid-column: span 2; }
+  @media screen and (min-width: 460px) {
+    .counter-container {
+      grid-column: span 1;
+      grid-row: 2; } }
+
+/*# sourceMappingURL=../maps/styles.css.map */
